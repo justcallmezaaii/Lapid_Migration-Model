@@ -6,7 +6,7 @@
 </head>
 <body class="container mt-5">
     <h2>Create New Task</h2>
-    <form action="{{ route('tasks.store') }}" method="POST">
+    <form action="/tasks" method="POST">
         @csrf
         <div class="mb-3">
             <label class="form-label">Task Title</label>
@@ -17,7 +17,7 @@
             <textarea name="description" class="form-control"></textarea>
         </div>
         <button type="submit" class="btn btn-success">Save Task</button>
-        <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Back</a>
+        <a href="/tasks/" class="btn btn-secondary">Back</a>
     </form>
 </body>
 </html>
