@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>Task Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="https://images.icon-icons.com/2963/PNG/512/macos_big_sur_download_folder_icon_186042.png" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
         body{
@@ -45,7 +46,7 @@
         <div class="p-4 text-gray-900">
             <div class="flex justify-between items-center mb-16">
                 <h1 class="text-3xl font-bold">My Tasks</h1>
-                <a href="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add New Task</a>
+                <a href="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600">Add New Task</a>
             </div>
 
             @if(session('success'))
@@ -78,11 +79,25 @@
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600" onclick="return confirm('Delete this task?')">Delete</button>
                                 </form>
+                            
+                                <button onclick="document.getElementById('modal-{{ $task->id }}').showModal()" class="px-3 py-1 text-white text-sm bg-gray-600 rounded-lg shadow-lg hover:bg-gray-700/70 transition">
+                                Details
+                                </button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                        <!-- Modal -->
+                         @foreach($tasks as $task)
+                                <dialog id="modal-{{ $task->id }}" class="rounded-2xl size-[300px] p-6 bg-white shadow-lg">
+                                    <h2 class="text-xl font-bold mb-4">{{ $task->title }}</h2>
+                                    <p class="mb-4">{{ $task->description }}</p>
+                                    <p class="mb-4"><strong>Status:</strong> {{ $task->is_completed ? 'Completed' : 'Pending' }}</p>
+                                    <button onclick="document.getElementById('modal-{{ $task->id }}').close()" class="px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-600">Close</button>
+                                </dialog>
+                            @endforeach
+                    
             </div>
         </div>
     </div>
