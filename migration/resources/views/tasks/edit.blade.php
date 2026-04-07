@@ -45,7 +45,7 @@
         <div class="p-4 text-gray-900">
             <h2 class="text-2xl font-bold mb-6">Edit Task</h2>
 
-            <form action="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/{{ $task->id }}" method="POST" class="space-y-4">
+            <form action="/tasks/{{ $task->id }}" method="POST" class="space-y-4">
                 @csrf
                 @method('PUT')
 
@@ -67,7 +67,7 @@
 
                 <div class="flex space-x-4">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update Task</button>
-                    <a href="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+                    <a href="/tasks" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
                 </div>
             </form>
         </div>

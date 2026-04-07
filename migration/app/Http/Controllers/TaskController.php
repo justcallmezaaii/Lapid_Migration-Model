@@ -30,7 +30,7 @@ class TaskController extends Controller
         ]);
 
         Task::create($request->all());
-        return redirect()->back();
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
     // Show the form for editing the specified task

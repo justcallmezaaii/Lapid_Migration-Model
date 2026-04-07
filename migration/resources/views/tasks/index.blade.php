@@ -16,6 +16,8 @@
         background-position: center;
         }
     </style>
+   <link rel="stylesheet" href="{{ asset('build/assets/app-DSZ_oN9h.css') }}">
+   <script src="{{ asset('build/assets/app-l0sNRNKZ.js') }}" defer></script>
 </head>
 <body class="bg-gray-50 min-h-screen py-8 relative">
     <div class="absolute top-0 left-0 w-full flex items-center px-4 py-2 bg-white/20 backdrop-blur-xl text-white text-sm font-medium shadow-md">
@@ -36,7 +38,7 @@
     <div class="absolute top-16 left-1/4 w-1/2 bg-white shadow-lg rounded-md">
         <div class="flex items-center justify-between bg-gray-200 px-3 py-1 rounded-t-md">
             <div class="flex space-x-2">
-                <span class="w-3 h-3 bg-red-500 rounded-full inline-block"></span>
+                <a href="/" class="w-3 h-3 bg-red-500 rounded-full inline-block hover:bg-red-600"></a>
                 <span class="w-3 h-3 bg-yellow-500 rounded-full inline-block"></span>
                 <span class="w-3 h-3 bg-green-500 rounded-full inline-block"></span>
             </div>
@@ -45,8 +47,11 @@
         </div>
         <div class="p-4 text-gray-900">
             <div class="flex justify-between items-center mb-16">
-                <h1 class="text-3xl font-bold">My Tasks</h1>
-                <a href="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600">Add New Task</a>
+                <div class="flex items-center space-x-4">
+                    <img src="https://github.com/justcallmezaaii/lapid-final_project/blob/main/src/assets/zai3.png?raw=true" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-white shadow-lg object-cover">
+                    <h1 class="text-3xl font-bold">My Tasks</h1>
+                </div>
+                <a href="/tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600">Add New Task</a>
             </div>
 
             @if(session('success'))
@@ -54,7 +59,11 @@
             @endif
 
             <div class="overflow-hidden rounded-lg shadow-md">
+                
                 <table class="w-full border-collapse border border-gray-300">
+                    <caption class="caption-bottom text-sm text-gray-500 mb-2">
+                         last updated: {{ \Carbon\Carbon::parse($tasks->max('updated_at'))->format('F j, Y, g:i a') }}
+                    </caption>
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="border border-gray-300 px-4 py-2 text-left">Title</th>
@@ -72,14 +81,11 @@
                                 </span>
                             </td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <a href="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/{{ $task->id }}/edit" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600 mr-2">Edit</a>
-                                
-                                <form action="https://scaling-funicular-gwg6qjrxw6r2p9wq-8000.app.github.dev/tasks/{{ $task->id }}" method="POST" class="inline">
+                                <form action="/tasks/{{ $task->id }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600" onclick="return confirm('Delete this task?')">Delete</button>
                                 </form>
-                            
                                 <button onclick="document.getElementById('modal-{{ $task->id }}').showModal()" class="px-3 py-1 text-white text-sm bg-gray-600 rounded-lg shadow-lg hover:bg-gray-700/70 transition">
                                 Details
                                 </button>
@@ -90,11 +96,19 @@
                 </table>
                         <!-- Modal -->
                          @foreach($tasks as $task)
-                                <dialog id="modal-{{ $task->id }}" class="rounded-2xl size-[300px] p-6 bg-white shadow-lg">
+                                <dialog id="modal-{{ $task->id }}" class="w-1/3 p-6 rounded-2xl shadow-lg">
                                     <h2 class="text-xl font-bold mb-4">{{ $task->title }}</h2>
                                     <p class="mb-4">{{ $task->description }}</p>
-                                    <p class="mb-4"><strong>Status:</strong> {{ $task->is_completed ? 'Completed' : 'Pending' }}</p>
-                                    <button onclick="document.getElementById('modal-{{ $task->id }}').close()" class="px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-600">Close</button>
+                                    <p class="mb-4">
+                                        <strong>Status:</strong> <span class="inline-flex items-center px-2 py-1 rounded-full text-sm text-white {{ $task->is_completed ? 'bg-green-500' : 'bg-yellow-500' }}">{{ $task->is_completed ? 'Completed' : 'Pending' }}</span>
+                                        <p class="text-sm text-gray-500">
+                                            last updated: {{ \Carbon\Carbon::parse($task->updated_at)->format('F j, Y, g:i a') }}
+                                        </p>
+                                    </p>
+                                    <div class="flex flex-wrap gap-3">
+                                        <a href="/tasks/{{ $task->id }}/edit" class="px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-600">Edit Task</a>
+                                        <button onclick="document.getElementById('modal-{{ $task->id }}').close()" class="px-4 py-2 bg-gray-500 text-white rounded-2xl hover:bg-gray-600">Close</button>
+                                    </div>
                                 </dialog>
                             @endforeach
                     
