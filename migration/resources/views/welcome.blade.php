@@ -9,7 +9,7 @@
             <link rel="stylesheet" href="{{ asset('build/assets/app-DSZ_oN9h.css') }}">
             <script src="{{ asset('build/assets/app-l0sNRNKZ.js') }}" defer></script>
                 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+<link rel="shortcut icon" href="https://github.com/justcallmezaaii/lapid-final_project/blob/main/src/assets/logo4.webp?raw=true">
         <style>
         @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
         body{
